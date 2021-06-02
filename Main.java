@@ -11,29 +11,27 @@ class Main {
             return 0;
         }  
         int total = 0;
+        int leftP = 0;
+        int rightP = height.length - 1;
+        int maxLeft = 0;
+        int maxRight = 0;
         
-        for (int i = 0; i < height.length; ++i) {
-            int maxLeft = 0;
-            int maxRight = 0;
-            int leftP = i;
-            int rightP = i;
-            
-            while (leftP >= 0) {
-                maxLeft = Math.max(height[leftP], maxLeft);
-                leftP--;
+        while (leftP < rightP) {
+            if (height[leftP] <= height[rightP]) {
+                if (height[leftP] >= maxLeft) {
+                    maxLeft = height[leftP];
+                } else {
+                    total += maxLeft - height[leftP]; 
+                }
+                leftP++;
+            } else {
+                if (height[rightP] >= maxRight) {
+                    maxRight = height[rightP];
+                } else {
+                    total += maxRight - height[rightP];
+                }
+                rightP--;
             }
-            
-            while (rightP < height.length) {
-                maxRight = Math.max(height[rightP], maxRight);
-                rightP++;
-            }
-            
-            int currentWater = Math.min(maxLeft, maxRight) - height[i];
-            
-            if (currentWater >= 0) {
-                total += currentWater;
-            }
-
         }
         
         return total;
